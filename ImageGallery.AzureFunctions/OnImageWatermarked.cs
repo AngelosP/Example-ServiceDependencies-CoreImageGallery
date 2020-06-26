@@ -23,7 +23,9 @@ namespace ImageGallery.AzureFunctions
             string name,
             ILogger log)
         {
-            var container = _blobClient.GetBlobContainerClient(Config.WatermarkContainer);
+            // We just got triggered that a watermarked image was uploaded, so
+            // now we want to go to the upload container and delete the original
+            var container = _blobClient.GetBlobContainerClient(Config.UploadContainer);
             var originalImage = container.GetBlobClient(name);
             await originalImage.DeleteIfExistsAsync();
 
