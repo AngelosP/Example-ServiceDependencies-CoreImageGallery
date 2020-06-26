@@ -10,6 +10,9 @@
     "mssql1": {
       "type": "mssql",
       "connectionId": "SQLConnection"
+    },
+    "appInsights1": {
+      "type": "appInsights"
     }
   }
 }
