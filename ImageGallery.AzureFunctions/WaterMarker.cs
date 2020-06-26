@@ -1,9 +1,8 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.IO;
 
-namespace Watermarker
+namespace ImageGallery.AzureFunctions
 {
     public class WaterMarker
     {
@@ -17,7 +16,7 @@ namespace Watermarker
                 Font font = new Font("Georgia", 12, FontStyle.Bold);
                 SizeF textSize = graphic.MeasureString(watermarkContent, font);
 
-                float xPostFromLeft = textSize.Width/2 + 10;
+                float xPostFromLeft = textSize.Width / 2 + 10;
                 float yPosFromBottom = (int)(inputImage.Height) - (textSize.Height) - 10;
 
                 graphic.SmoothingMode = SmoothingMode.HighQuality;

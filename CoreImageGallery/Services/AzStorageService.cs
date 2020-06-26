@@ -16,14 +16,14 @@ namespace CoreImageGallery.Services
 
         private const string ImagePrefix = "img_";
         private BlobContainerClient _uploadContainer;
-        private BlobContainerClient _publicContainer;
+        private BlobContainerClient _watermarkContainer;
 
         private ApplicationDbContext _dbContext;
 
         public AzStorageService(IConfiguration config, ApplicationDbContext dbContext, BlobServiceClient client)
         {
             _uploadContainer = client.GetBlobContainerClient(Config.UploadContainer);
-            _publicContainer = client.GetBlobContainerClient(Config.WatermarkedContainer);
+            _watermarkContainer = client.GetBlobContainerClient(Config.WatermarkContainer);
 
             // OLD SDK
             //_uploadContainer = client.GetContainerReference(Config.UploadContainer);
@@ -54,9 +54,9 @@ namespace CoreImageGallery.Services
 
             var imageList = new List<UploadedImage>();
 
-            foreach (BlobItem blob in _publicContainer.GetBlobs(prefix: ImagePrefix))
+            foreach (BlobItem blob in _watermarkContainer.GetBlobs(prefix: ImagePrefix))
             {
-                var blobClient = _publicContainer.GetBlobClient(blob.Name);
+                var blobClient = _watermarkContainer.GetBlobClient(blob.Name);
                 var image = new UploadedImage { ImagePath = blobClient.Uri.ToString() };
                 imageList.Add(image);
             }
@@ -82,9 +82,9 @@ namespace CoreImageGallery.Services
         {
             if (!ResourcesInitialized)
             {
-                _publicContainer.CreateIfNotExists();
+                _watermarkContainer.CreateIfNotExists();
                 _uploadContainer.CreateIfNotExists();
-                _publicContainer.SetAccessPolicy(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
+                _watermarkContainer.SetAccessPolicy(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
 
                 // OLD SDK
                 //var permissions = await _publicContainer.GetPermissionsAsync();

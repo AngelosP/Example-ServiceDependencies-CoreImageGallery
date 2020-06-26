@@ -9,7 +9,7 @@ namespace ImageGallery.Model
         public const string CollectionId = "uploads";
         public const string DatabaseId = "ImageGallery";
         public const string UploadContainer = "images";
-        public const string WatermarkedContainer = "images-watermarked";
+        public const string WatermarkContainer = "images-watermarked";
         public const string DeviceId = "/deviceId";
     }
 }

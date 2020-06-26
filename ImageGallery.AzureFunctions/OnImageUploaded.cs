@@ -5,15 +5,15 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
-namespace Watermarker
+namespace ImageGallery.AzureFunctions
 {
-    public static class ImageUploaded
+    public static class OnImageUploaded
     {
         const string WaterMarkText = "(c) CoreImageGallery";
 
-        [FunctionName("ImageUploaded")]
-        public static void Run([BlobTrigger("images/{name}")]Stream inputBlob,
-                               [Blob("images-watermarked/{name}", FileAccess.Write)] Stream outputBlob,
+        [FunctionName("OnImageUploaded")]
+        public static void Run([BlobTrigger(Config.UploadContainer + "/{name}")] Stream inputBlob,
+                               [Blob(Config.WatermarkContainer + "/{name}", FileAccess.Write)] Stream outputBlob,
                                string name,
                                ILogger log)
         {
@@ -28,5 +28,4 @@ namespace Watermarker
             }
         }
     }
-
 }
