@@ -7,6 +7,7 @@ using CoreImageGallery.Data;
 using CoreImageGallery.Extensions;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using System;
 
 namespace CoreImageGallery.Services
 {
@@ -82,9 +83,8 @@ namespace CoreImageGallery.Services
         {
             if (!ResourcesInitialized)
             {
-                _watermarkContainer.CreateIfNotExists();
+                _watermarkContainer.CreateIfNotExists(PublicAccessType.Blob);
                 _uploadContainer.CreateIfNotExists();
-                _watermarkContainer.SetAccessPolicy(Azure.Storage.Blobs.Models.PublicAccessType.Blob);
 
                 // OLD SDK
                 //var permissions = await _publicContainer.GetPermissionsAsync();
